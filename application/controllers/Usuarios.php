@@ -33,6 +33,60 @@ class Usuarios extends CI_Controller {
 
     }
 
+    public function add(){
+
+        
+
+        $this->form_validation->set_rules('first_name'      , 'Nome'             , 'trim|required');
+        $this->form_validation->set_rules('last_name'       , 'Sobrenome'        , 'trim|required');
+        $this->form_validation->set_rules('email'           , 'E-mail'           , 'trim|required');
+        $this->form_validation->set_rules('username'        , 'Usuário'          , 'trim|required');
+        $this->form_validation->set_rules('password'        , 'Senha'            , 'trim|required');
+        $this->form_validation->set_rules('password_confirm', 'Confirmar Senha'  , 'trim|required');
+
+        if($this->form_validation->run()){
+            
+            // $username = $this->security->xss_clean($this->input->post('username'));
+            $password = $this->security->xss_clean($this->input->post('password'));
+            $email    = $this->security->xss_clean($this->input->post('email'));
+
+            $additional_data = array(
+                'first_name'  => $this->input->post('first_name'),
+                'username'    => $this->input->post('username'),
+                'last_name'   => $this->input->post('last_name'),
+                'active'      => $this->input->post('active'),
+            );
+            
+            $group = array($this->input->post('perfil_usuario'));
+
+            $additional_data = $this->security->xss_clean($additional_data);
+            $group           = $this->security->xss_clean($group);
+
+            if($this->ion_auth->register($username, $password, $email, $additional_data, $group)){
+
+                $this->session->set_flashdata('sucesso','Usuário Cadastrado com sucesso');
+
+            }else{
+
+                $this->session->set_flashdata('error', 'Erro ao salvar dados!'); 
+            }
+
+            redirect('usuarios');
+
+        }else{
+
+            $data = array(
+                'titulo' => 'Cadastrar usuário'
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('usuarios/add');
+            $this->load->view('layout/footer');
+        }
+
+        
+    }
+
     public function edit($user_id = NULL){
 
         if(!$user_id || !$this->ion_auth->user($user_id)->row()){
