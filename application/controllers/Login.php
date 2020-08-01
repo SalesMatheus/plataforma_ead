@@ -5,15 +5,21 @@ class Login extends CI_Controller {
 
     public function index(){
         
-        $data = array(
-            'titulo' => 'Login',
-            'styles' => array(
-                'vendor/datatables/dataTables.bootstrap4.min.css'
-                
-            ),
-        );
-        $this->load->view('layout/header');
-        $this->load->view('login/index');
+        $identify = $this->security->xss_clean($this->input->post('email'));
+        $password = $this->security->xss_clean($this->input->post('password'));
+        $remember = FALSE;
+
+        if($this->ion_auth->login($identify, $password, $remember)){
+
+            redirect('home');
+
+        }else{
+
+            $this->session->set_flashdata('error', 'Usuário ou senha inválidos');
+
+            $this->load->view('layout/header');
+            $this->load->view('login/index');
+        }
 
     }
 }
