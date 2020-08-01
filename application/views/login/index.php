@@ -3,7 +3,7 @@
 <div class="container">
     <img class="imgLogo" src="../../../public/img/ead.png" alt="UniCeub" />
     <div class="content">
-        <form name="form_index" method="POST">
+        <form name="form_autenticacao_login" method="POST" action="<?php echo base_url('login/validacao_login') ?>">
             <label htmlFor="ra">Informe seu E-mail.</label>
             <div class="input-group">
                 <div class="input-group-prepend">
