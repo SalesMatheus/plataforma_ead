@@ -39,15 +39,23 @@ class Usuarios extends CI_Controller {
 
         }else{
 
-            $data = array(
-                'titulo' => 'Editar usuário',
-                'usuario' => $this->ion_auth->user($user_id)->row(),
-                'perfil_usuario' => $this->ion_auth->get_users_groups($user_id)->row()
-            );
+            $this->form_validation->set_rules('first_name', 'Nome', 'trim|required');
 
-            $this->load->view('layout/header', $data);
-            $this->load->view('usuarios/edit');
-            $this->load->view('layout/footer');
+            if($this->form_validation->run()){
+                
+                exit('Validado');
+            }else{
+
+                $data = array(
+                    'titulo' => 'Editar usuário',
+                    'usuario' => $this->ion_auth->user($user_id)->row(),
+                    'perfil_usuario' => $this->ion_auth->get_users_groups($user_id)->row()
+                );
+    
+                $this->load->view('layout/header', $data);
+                $this->load->view('usuarios/edit');
+                $this->load->view('layout/footer');
+            }
         }
         
     }
