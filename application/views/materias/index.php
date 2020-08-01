@@ -46,7 +46,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <a title="Cadastrar novo usuário" href="<?php echo base_url('usuarios/add')?>" class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp; Novo</a>
+            <a title="Cadastrar novo usuário" href="<?php echo base_url('materias/add')?>" class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp; Novo</a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -54,9 +54,7 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Usuário</th>
-                    <th>Login</th>
-                    <th>Perfil</th>
+                    <th>Nome da Matéria</th>
                     <th class="text-center">Ativo</th>
                     <th class="text-right ">Ações</th>
                   </tr>
@@ -64,17 +62,15 @@
                 <tbody>
                   
                     <?php
-                      foreach($usuarios as $linha){
+                      foreach($materias as $linha){
                     ?>
                       <tr>
-                        <td><?php echo $linha->id?></td>
-                        <td><?php echo $linha->username?></td>
-                        <td><?php echo $linha->email?></td>
-                        <td><?php echo ($this->ion_auth->is_admin($linha->id) ? 'Administrador' : 'Aluno') ?></td>
-                        <td class="text-center pr-4"><?php echo ($linha->active == 1 ? '<span class="badge badge-success">Sim</span>' : '<span class="badge badge-danger">Não</span>')?></td>
+                        <td><?php echo $linha->materia_id?></td>
+                        <td><?php echo $linha->materia_nome?></td>
+                        <td class="text-center pr-4"><?php echo ($linha->materia_ativa == 1 ? '<span class="badge badge-success">Sim</span>' : '<span class="badge badge-danger">Não</span>')?></td>
                         <td class="text-right" >
-                            <a title="Editar" href="<?php echo base_url('usuarios/edit/'.$linha->id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
-                            <a title="Excluir" href="<?php echo base_url('usuarios/del/'.$linha->id); ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
+                            <a title="Editar" href="<?php echo base_url('materias/edit/'.$linha->materia_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
+                            <a title="Excluir" href="<?php echo base_url('materias/del/'.$linha->materia_id); ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
                         </td>
                       </tr>
                     <?php    

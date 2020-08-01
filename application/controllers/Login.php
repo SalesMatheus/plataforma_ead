@@ -22,7 +22,7 @@ class Login extends CI_Controller {
 
         if($this->ion_auth->login($identify, $password, $remember)){
 
-            redirect('home');
+            redirect('usuarios');
 
         }else{
 

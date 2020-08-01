@@ -1,7 +1,7 @@
 
 
 <div class="container">
-    <img class="imgLogo" src="../../../public/img/ead.png" alt="UniCeub" />
+    <img class="imgLogo" src="../../../public/img/ead.png" alt="Ead" />
     <div class="content">
         <form name="form_autenticacao_login" method="POST" action="<?php echo base_url('login/validacao_login') ?>">
             <label htmlFor="ra">Informe seu E-mail.</label>
@@ -24,6 +24,22 @@
             <button class="btn" type="submit">Entrar <i class="fas fa-sign-in-alt"></i></button>
         </form>
     </div>
+    <?php if($message = $this->session->flashdata('info')):?>
+        <div>
+            <label>
+            </label>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong><?php echo $message?></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
     <?php if($message = $this->session->flashdata('error')):?>
         <div>
             <label>
