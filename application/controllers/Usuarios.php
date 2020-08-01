@@ -46,7 +46,6 @@ class Usuarios extends CI_Controller {
 
         if($this->form_validation->run()){
             
-            // $username = $this->security->xss_clean($this->input->post('username'));
             $password = $this->security->xss_clean($this->input->post('password'));
             $email    = $this->security->xss_clean($this->input->post('email'));
 
@@ -158,6 +157,31 @@ class Usuarios extends CI_Controller {
                 $this->load->view('usuarios/edit');
                 $this->load->view('layout/footer');
             }
+        }
+        
+    }
+
+    public function del($user_id = NULL){
+
+        if(!$user_id || !$this->ion_auth->user($user_id)->row()){
+
+            $this->session->set_flashdata('error', 'Usuário não encontrado');
+
+            redirect('usuarios');
+
+        }else{
+           
+            if($this->ion_auth->delete_user($user_id)){
+                
+                $this->session->set_flashdata('sucesso', 'Usuário deletado com sucesso!'); 
+
+            }else{
+
+                $this->session->set_flashdata('error', 'Erro ao deletar Usuário!'); 
+            }   
+
+                redirect('usuarios');
+
         }
         
     }
