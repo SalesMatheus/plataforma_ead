@@ -77,16 +77,21 @@ class Materias extends CI_Controller {
                     'materia' => $this->core_model->get_by_id('materias', array('materia_id' => $materia_id))
                 );
 
-        //    echo '<pre>';
-        //    print_r($data['materia']);
-        //    exit();
-
-
-
                 $this->load->view('layout/header', $data);
                 $this->load->view('materias/edit');
                 $this->load->view('layout/footer');
             }
+        }
+    }
+
+    public function del($materia_id = NULL) {
+
+        if (!$materia_id || !$this->core_model->get_by_id('materias', array('materia_id' => $materia_id))) {
+            $this->session->set_flashdata('error', 'Matéria não encontrada');
+            redirect('materias');
+        } else {
+            $this->core_model->delete('materias', array('materia_id' => $materia_id));
+            redirect('materias');
         }
     }
 }
