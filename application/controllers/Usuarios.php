@@ -22,7 +22,9 @@ class Usuarios extends CI_Controller {
                 'vendor/datatables/app.js'
 
             ),
-            'usuarios' => $this->ion_auth->users()->result()
+            'usuarios' => $this->ion_auth->users()->result(),
+
+            'perfil_usuario' => $this->ion_auth->get_users_groups($user_id = NULL)->row()
         );
 
         $this->load->view('layout/header', $data);
@@ -35,15 +37,61 @@ class Usuarios extends CI_Controller {
 
         if(!$user_id || !$this->ion_auth->user($user_id)->row()){
 
-            exit('Usuário não encontrado');
+            $this->session->set_flashdata('error', 'Usuário não encontrado');
+
+            redirect('usuarios');
 
         }else{
-
-            $this->form_validation->set_rules('first_name', 'Nome', 'trim|required');
+            
+            $this->form_validation->set_rules('first_name'      , 'Nome'             , 'trim|required');
+            $this->form_validation->set_rules('last_name'       , 'Sobrenome'        , 'trim|required');
+            $this->form_validation->set_rules('email'           , 'E-mail'           , 'trim|required');
+            $this->form_validation->set_rules('username'        , 'Usuário'          , 'trim|required');
+            $this->form_validation->set_rules('password'        , 'Senha'            , 'trim|required');
+            $this->form_validation->set_rules('password_confirm', 'Confirmar Senha'  , 'trim|required');
 
             if($this->form_validation->run()){
                 
-                exit('Validado');
+
+                $data = elements(
+                            array(
+                                'first_name',
+                                'last_name',
+                                'email',
+                                'username',
+                                'active',
+                                'password'
+                            ), $this->input->post()
+                        );
+                
+                //Proteção contra códigos mal-intencionados
+                $data = $this->security->xss_clean($data);
+                
+                //Verificação de mudança de perfil
+                if($this->ion_auth->update($user_id, $data)){
+
+                    $perfil_usuario_db = $this->ion_auth->get_users_groups($user_id)->row();
+
+                    $perfil_usuario_post = $this->input->post('perfil_usuario');
+
+                    if($perfil_usuario_db->id != $perfil_usuario_post){
+
+                        //remove usuario do grupo
+                        $this->ion_auth->remove_from_group($perfil_usuario_db->id, $user_id);
+
+                        //adicionado usuario ao novo grupo
+                        $this->ion_auth->add_to_group($perfil_usuario_post, $user_id);
+
+                    }
+
+                   $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso!'); 
+
+                }else{
+
+                    $this->session->set_flashdata('error', 'Erro ao salvar dados!'); 
+                }   
+
+                redirect('usuarios');
             }else{
 
                 $data = array(
