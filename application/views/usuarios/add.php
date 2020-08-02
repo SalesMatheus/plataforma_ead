@@ -28,45 +28,45 @@
         <div class="form-group row">
           <div class="col-md-4">
             <label>Nome</label>
-            <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="<?php echo $usuario->first_name;?>">
+            <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="">
             <?php echo form_error('first_name', '<small class="form-text text-danger">','</small>'); ?>
           </div>
           <div class="col-md-4">
             <label>Sobrenome</label>
-            <input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="<?php echo $usuario->last_name;?>">
+            <input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="">
             <?php echo form_error('last_name', '<small class="form-text text-danger">','</small>'); ?>
           </div>
           <div class="col-md-4">
             <label>E-Mail</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter e-mail" value="<?php echo $usuario->email;?>">
+            <input type="email" class="form-control" name="email" placeholder="Enter e-mail" value="">
             <?php echo form_error('email', '<small class="form-text text-danger">','</small>'); ?>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-md-4">
               <label>Usuário</label>
-              <input type="text" class="form-control" name="username" placeholder="Enter username" value="<?php echo $usuario->username;?>">
+              <input type="text" class="form-control" name="username" placeholder="Enter username" value="">
               <?php echo form_error('username', '<small class="form-text text-danger">','</small>'); ?>
             </div>
             <div class="col-md-4">
                 <label>Ativo</label>
                 <select class="form-control" name="active">
-                  <option value="0" <?php echo ($usuario->active == 0) ? 'selected' : ''?>>Não</option>
-                  <option value="1" <?php echo ($usuario->active == 1) ? 'selected' : ''?>>Sim</option>
+                  <option value="0" >Não</option>
+                  <option value="1" >Sim</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label>Perfil de acesso</label>
                 <select class="form-control" name="perfil_usuario">
-                  <option value="1" <?php echo ($perfil_usuario->id == 1) ? 'selected' : ''?>>Administrador</option>
-                  <option value="3" <?php echo ($perfil_usuario->id == 3) ? 'selected' : ''?>>Aluno</option>
+                  <option value="1" >Administrador</option>
+                  <option value="3" >Aluno</option>
                 </select>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-md-6">
                 <label>Senha</label>
-                <input type="password" class="form-control" name="password" placeholder="Senha" value="<?php echo $usuario->password;?>">
+                <input type="password" class="form-control" name="password" placeholder="Senha" value="">
                 <?php echo form_error('password', '<small class="form-text text-danger">','</small>'); ?>
             </div>
             <div class="col-md-6">
@@ -75,7 +75,6 @@
                 <?php echo form_error('password_confirm', '<small class="form-text text-danger">','</small>'); ?>
             </div>
           </div>
-        <input type="hidden" name="materia_codigo" value="<?php echo $this->core_model->generate_unique_code('materias', 'numeric', 8, 'materia_codigo')?>">
         <button type="submit" class="btn btn-primary float-right">Confirmar</button>
       </form>
     </div>
