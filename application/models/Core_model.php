@@ -4,10 +4,14 @@ defined('BASEPATH') OR exit('Ação não permitida');
 
 class Core_model extends CI_Model{
 
-    public function get_all($tabela = NULL, $condicao = NULL) {
-
+    public function get_all($tabela = NULL, $condicao = NULL, $tabela2 = NULL, $condicao_join = NULL, $condicao_join2 = NULL) {
+        
         if ($tabela) {
 
+            if($tabela2){
+                $this->db->join($tabela2,'materias_usuario.materia_id = materias.materia_id');
+            }
+            
             if (is_array($condicao)) {
 
                 $this->db->where($condicao);
@@ -25,6 +29,7 @@ class Core_model extends CI_Model{
             $this->db->where($condicao);
             $this->db->limit(1);
 
+            
             return $this->db->get($tabela)->row();
         } else {
             return FALSE;

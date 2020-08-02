@@ -208,14 +208,15 @@ class Usuarios extends CI_Controller {
             $data = $this->security->xss_clean($data);
 
             $this->core_model->insert('materias_usuario', $data);
-            redirect('produtos');
-        } else {
 
-            //Erro de validação
+            redirect('usuarios/vincular_materia_usuario/'.$user_id);
+
+        } else {
 
             $data = array(
                 'titulo' => 'Vincular Matérias',
                 'materias' => $this->core_model->get_all('materias', array('materias')),
+                'materias_usuario' => $this->core_model->get_all('materias', array('user_id' => $user_id), 'materias_usuario', 'materias.materia_id', 'materias_usuario.materia_id'),
                 'usuario' => $this->core_model->get_by_id('users', array('id' => $user_id)),
             );
 
@@ -224,5 +225,17 @@ class Usuarios extends CI_Controller {
             $this->load->view('layout/footer');
         }
     }
+
+    public function del_materias_usuario($id = NULL, $user_id = NULL) {
+
+        if (!$id || !$this->core_model->get_by_id('materias_usuario', array('id' => $id))) {
+            $this->session->set_flashdata('error', 'Matéria não encontrada');
+            redirect('usuarios/vincular_materia_usuario/'.$user_id);
+        } else {
+            $this->core_model->delete('materias_usuario', array('id' => $id));
+            redirect('usuarios/vincular_materia_usuario/'.$user_id);
+        }
+    }
+
 
 }
