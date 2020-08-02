@@ -108,7 +108,9 @@ CREATE TABLE `login_attempts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-################################################
+#
+# Table structure for table 'materias'
+#
 
 CREATE TABLE `materias` (
   `materia_id` int(11) NOT NULL,
@@ -126,7 +128,9 @@ ALTER TABLE `materias`
   MODIFY `materia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
-#################################################
+#
+# Table structure for table 'materias_usuario'
+#
 
 
 CREATE TABLE `materias_usuario` (
@@ -143,5 +147,4 @@ ALTER TABLE `materias_usuario`
   
   COMMIT;
   
-#################################################
 
