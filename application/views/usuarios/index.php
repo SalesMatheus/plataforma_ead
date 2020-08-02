@@ -73,6 +73,7 @@
                         <td><?php echo ($this->ion_auth->is_admin($linha->id) ? 'Administrador' : 'Aluno') ?></td>
                         <td class="text-center pr-4"><?php echo ($linha->active == 1 ? '<span class="badge badge-success">Sim</span>' : '<span class="badge badge-danger">Não</span>')?></td>
                         <td class="text-right" >
+                            <a title='Vincular Matérias' href='<?php echo base_url('usuarios/vincular_materia_usuario/'.$linha->id); ?>' class='btn btn-sm btn-success'><i class='fas fa-plus'></i>&nbsp;Matérias</a>
                             <a title="Editar" href="<?php echo base_url('usuarios/edit/'.$linha->id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
                             <a title="Excluir" href="<?php echo base_url('usuarios/del/'.$linha->id); ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
                         </td>

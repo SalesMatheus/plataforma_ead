@@ -67,7 +67,6 @@ class Materias extends CI_Controller {
                 'scripts' => array(
                     'vendor/mask/app.js',
                 ),
-                // 'materia_codigo' => $this->core_model->generate_unique_code('materias', 'numeric', 8, 'materia_codigo')
             );
             
             $this->load->view('layout/header', $data);

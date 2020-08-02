@@ -189,4 +189,40 @@ class Usuarios extends CI_Controller {
         }
         
     }
+
+    public function vincular_materia_usuario($user_id = NULL) {
+
+        $this->form_validation->set_rules('first_name'      , 'Nome'             , 'trim|required');
+        
+        if ($this->form_validation->run()) {
+            
+            $user_id = $_POST['user_id'];
+            $materia_id = $_POST['materia_id'];
+
+            $data = array(
+                        'user_id'    => $user_id,
+                        'materia_id' => $materia_id,
+                    );
+                    
+            //Proteção contra códigos mal-intencionados
+            $data = $this->security->xss_clean($data);
+
+            $this->core_model->insert('materias_usuario', $data);
+            redirect('produtos');
+        } else {
+
+            //Erro de validação
+
+            $data = array(
+                'titulo' => 'Vincular Matérias',
+                'materias' => $this->core_model->get_all('materias', array('materias')),
+                'usuario' => $this->core_model->get_by_id('users', array('id' => $user_id)),
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('usuarios/vincular_materia_usuario');
+            $this->load->view('layout/footer');
+        }
+    }
+
 }
