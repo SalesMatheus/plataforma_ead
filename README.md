@@ -6,11 +6,14 @@ O login no Sistema pode ser realizado através do usuário: admin@admin.com e a 
 
 # COMANDOS SQL
 
-DROP TABLE IF EXISTS `groups`;
+
+CREATE SCHEMA `projeto` ;
 
 #
 # Table structure for table 'groups'
 #
+
+DROP TABLE IF EXISTS `groups`;
 
 CREATE TABLE `groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
