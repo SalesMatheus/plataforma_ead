@@ -100,4 +100,10 @@ class Core_model extends CI_Model{
             return FALSE;
         }
     }
+    public function generate_unique_code($table = NULL, $type_of_code = NULL, $size_of_code, $field_search) {
+
+        $code = random_string($type_of_code, $size_of_code);
+
+        return $code;
+    }
 }

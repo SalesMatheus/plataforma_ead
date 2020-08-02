@@ -38,6 +38,44 @@ class Materias extends CI_Controller {
 
     }
 
+    public function add() {
+
+        $this->form_validation->set_rules('materia_nome'      , 'Nome da matéria'             , 'trim|required');
+
+
+        if ($this->form_validation->run()) {
+
+
+            $data = elements(
+                    array(
+                'materia_nome',
+                'materia_ativa'
+                    ), $this->input->post()
+            );
+
+            //Proteção contra códigos mal-intencionados
+            $data = $this->security->xss_clean($data);
+
+            $this->core_model->insert('materias', $data);
+            redirect('materias');
+        } else {
+
+            //Erro de validação
+
+            $data = array(
+                'titulo' => 'Cadastrar Matéria',
+                'scripts' => array(
+                    'vendor/mask/app.js',
+                ),
+                // 'materia_codigo' => $this->core_model->generate_unique_code('materias', 'numeric', 8, 'materia_codigo')
+            );
+            
+            $this->load->view('layout/header', $data);
+            $this->load->view('materias/add');
+            $this->load->view('layout/footer');
+        }
+    }
+
     public function edit($materia_id = NULL) {
 
         if (!$materia_id || !$this->core_model->get_by_id('materias', array('materia_id' => $materia_id))) {
